@@ -9,7 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Controller
+@Slf4j  // 로깅을 위한 어노테이션
 public class ArticleController {
 
     @Autowired      // Spring boot가 미리 생성해놓은 객체를 가져다가 자동 연결
@@ -23,14 +26,16 @@ public class ArticleController {
     @PostMapping("/articles/create")
     public String createArticle(ArticleForm form) {
 
+        log.info(form.toString());
+
         // 1. Dto -> Entity 변환
         Article article = form.toEntity();
 
-        System.out.println(article.toString());
+        log.info(article.toString());
 
         // 2. save Entity in DB (Repository)
         Article saved = articleRepository.save(article);
-        System.out.println(saved.toString());
+        log.info(saved.toString());
 
 
         return "";
