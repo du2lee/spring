@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.article.mapper.ArticleMapper">
+
+	<sql id="articleColumns">
+		  idx
+		, title
+		, content
+		, writer
+		, view_cnt
+		, notice_yn
+		, secret_yn
+		, delete_yn
+		, insert_time
+		, update_time
+		, delete_time
+	</sql>
+
+	<insert id="insertArticle" parameterType="ArticleDTO">
+		INSERT INTO article (
+			<include refid="articleColumns" />
+		) VALUES (
+			  #{idx}
+			, #{title}
+			, #{content}
+			, #{writer}
+			, 0
+			, IFNULL(#{noticeYn}, 'N')
+			, IFNULL(#{secretYn}, 'N')
+			, 'N'
+			, NOW()
+			, NULL
+			, NULL
+		)
+	</insert>
+
+	<select id="selectArticleDetail" parameterType="long" resultType="ArticleDTO">
+		SELECT
+			<include refid="articleColumns" />
+		FROM
+			article
+		WHERE
+			delete_yn = 'N'
+		AND
+			idx = #{idx}
+	</select>
+
+	<update id="updateArticle" parameterType="ArticleDTO">
+		UPDATE article
+		SET
+			  update_time = NOW()
+			, title = #{title}
+			, content = #{content}
+			, writer = #{writer}
+			, notice_yn = IFNULL(#{noticeYn}, 'N')
+			, secret_yn = IFNULL(#{secretYn}, 'N')
+		WHERE
+			idx = #{idx}
+	</update>
+
+	<update id="deleteArticle" parameterType="long">
+		UPDATE article
+		SET
+			  delete_yn = 'Y'
+			, delete_time = NOW()
+		WHERE
+			idx = #{idx}
+	</update>
+
+	<select id="selectArticleList" parameterType="ArticleDTO" resultType="ArticleDTO">
+		SELECT
+			<include refid="articleColumns" />
+		FROM
+			article
+		WHERE
+			delete_yn = 'N'
+		ORDER BY
+			notice_yn ASC,
+			idx DESC,
+			insert_time DESC
+	</select>
+
+	<select id="selectArticleTotalCount" parameterType="ArticleDTO" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			article
+		WHERE
+			delete_yn = 'N'
+	</select>
+
+</mapper>
