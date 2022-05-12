@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.board.constant.Method;
 import com.board.domain.BoardDTO;
-import com.board.paging.Criteria;
 import com.board.service.BoardService;
 import com.board.util.UiUtils;
 
