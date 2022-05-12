@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.board.constant.Method;
 import com.board.domain.BoardDTO;
+import com.board.paging.Criteria;
 import com.board.service.BoardService;
 import com.board.util.UiUtils;
 
@@ -12,6 +13,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -60,13 +62,13 @@ public class BoardController extends UiUtils{
             "/board/list.do", Method.GET, null, model);
 	}
 
-    @GetMapping(value = "/board/list.do")
-    public String openBoardList(Model model) {
+	@GetMapping(value = "/board/list.do")
+	public String openBoardList(@ModelAttribute("criteria") Criteria criteria, Model model) {
+		List<BoardDTO> boardList = boardService.getBoardList(criteria);
+		model.addAttribute("boardList", boardList);
 
-        List<BoardDTO> boardList = boardService.getBoardList();
-        model.addAttribute("boardList", boardList);
-        return "board/list";
-    }
+		return "board/list";
+	}
 
     @GetMapping(value = "/board/view.do")
     public String openBoardDetail(@RequestParam(value = "idx", required = false) Long idx,  Model model){

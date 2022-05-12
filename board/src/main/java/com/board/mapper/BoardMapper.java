@@ -3,6 +3,7 @@ package com.board.mapper;
 import java.util.List;
 
 import com.board.domain.BoardDTO;
+import com.board.paging.Criteria;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -15,9 +16,9 @@ public interface BoardMapper {
 
     public int updateBoard(BoardDTO params);
 
-    public List<BoardDTO> selectBoardList();
-    
-    public int selectBoardTotalCount();
-
     public int deleteBoard(Long idx);
+
+    public List<BoardDTO> selectBoardList(Criteria criteria);
+    
+    public int selectBoardTotalCount(Criteria criteria);
 }
