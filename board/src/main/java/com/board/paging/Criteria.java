@@ -1,5 +1,7 @@
 package com.board.paging;
 
+import org.springframework.web.util.*;
+
 import lombok.Data;
 
 @Data
@@ -26,9 +28,17 @@ public class Criteria {
 		this.pageSize = 10;
 	}
 
-	public int getStartPage() {
-		return (currentPageNo - 1) * recordsPerPage;
-	}
+	public String makeQueryString(int pageNo) {
 
-    
+		UriComponents uriComponents = UriComponentsBuilder.newInstance()
+				.queryParam("currentPageNo", pageNo)
+				.queryParam("recordsPerPage", recordsPerPage)
+				.queryParam("pageSize", pageSize)
+				.queryParam("searchType", searchType)
+				.queryParam("searchKeyword", searchKeyword)
+				.build()
+				.encode();
+
+		return uriComponents.toUriString();
+	}
 }
