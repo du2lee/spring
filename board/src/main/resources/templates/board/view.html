@@ -66,20 +66,7 @@
 						<div class="input-group-btn"><button type="button" class="btn waves-effect waves-light"><i class="fa fa-commenting" aria-hidden="true"></i></button></div>
 						<!-- /.input-group-btn -->
 					</div>
-					<ul class="notice-list">
-						<li>
-							<span class="name">이두희</span>
-							<span class="desc">댓글 추천 구독</span>
-							<span class="time">2022.05.10</span>
-							<button type="button" class="btn btn-xs btn-circle"><i class="fa fa-close" aria-hidden="true"></i></button>
-						</li>
-						<li>
-							<span class="name">손흥민</span>
-							<span class="desc">222222222</span>
-							<span class="time">2022.05.11</span>
-							<button type="button" class="btn btn-xs btn-circle"><i class="fa fa-close" aria-hidden="true"></i></button>
-						</li>
-					</ul>
+					<ul class="notice-list"></ul>
 				</form>
 			</div>
 			<!-- /.card-content -->
@@ -113,6 +100,34 @@
 					$("body").append(html);
 					document.dataForm.submit();
 				}
+			}
+
+			$(function() {
+				printCommentList();
+			});
+
+			function printCommentList() {
+
+				var uri = /*[[ @{/comments/} + ${board.idx} ]]*/;
+
+				$.get(uri, function(response) {
+					if (isEmpty(response) == false) {
+						var commentsHtml = "";
+
+						$(response.commentList).each(function(idx, comment) {
+							commentsHtml += `
+								<li>
+									<span class="name">${comment.writer}</span>
+									<span class="desc">${comment.content}</span>
+									<span class="time">${moment(comment.insertTime).format('YYYY-MM-DD HH:mm:ss')}</span>
+									<button type="button" class="btn btn-xs btn-circle"><i class="fa fa-close" aria-hidden="true"></i></button>
+								</li>
+							`;
+						});
+
+						$(".notice-list").html(commentsHtml);
+					}
+				}, "json");
 			}
 			/*[- end of function -]*/
 
