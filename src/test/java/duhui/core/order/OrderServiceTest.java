@@ -1,5 +1,6 @@
 package duhui.core.order;
 
+import duhui.core.AppConfig;
 import duhui.core.discount.DiscountPolicy;
 import duhui.core.discount.FixDiscountPolicy;
 import duhui.core.member.Grade;
@@ -7,12 +8,19 @@ import duhui.core.member.Member;
 import duhui.core.member.MemberService;
 import duhui.core.member.MemberServiceImpl;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class OrderServiceTest {
+    MemberService memberService;
+    OrderService orderService;
 
-    MemberService memberService = new MemberServiceImpl();
-    OrderService orderService = new OrderServiceImpl();
+    @BeforeEach
+    public void beforeEach(){
+        AppConfig appConfig = new AppConfig();
+        memberService = appConfig.memberService();
+        orderService = appConfig.fixOrderService();
+    }
 
     @Test
     void creatOrder(){
