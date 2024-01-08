@@ -3,7 +3,6 @@ package duhui.core.beanfind;
 import duhui.core.AppConfig;
 import duhui.core.member.MemberService;
 import duhui.core.member.MemberServiceImpl;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
