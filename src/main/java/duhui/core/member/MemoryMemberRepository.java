@@ -1,8 +1,11 @@
 package duhui.core.member;
 
+import org.springframework.stereotype.Component;
+
 import java.util.HashMap;
 import java.util.Map;
 
+@Component
 public class MemoryMemberRepository implements MemberRepository {
 
     private static Map<Long, Member> store = new HashMap<>();   //  실무에서 사용하려면 ConcurrentHashMap() 사용
