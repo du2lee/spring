@@ -1,0 +1,31 @@
+package duhui.core.singleton;
+
+import duhui.core.AppConfig;
+import duhui.core.member.MemberRepository;
+import duhui.core.member.MemberServiceImpl;
+import duhui.core.order.OrderServiceImpl;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+public class ConfigurationSingletonTest {
+
+    @Test
+    void configurationTest(){
+        ApplicationContext ac = new AnnotationConfigApplicationContext(AppConfig.class);
+
+        MemberServiceImpl memberService = ac.getBean("memberService", MemberServiceImpl.class);
+        OrderServiceImpl orderService = ac.getBean("fixOrderService", OrderServiceImpl.class);
+        MemberRepository memberRepository = ac.getBean("memberRepository", MemberRepository.class);
+
+        MemberRepository memberRepository1 = memberService.getMemberRepository();
+        MemberRepository memberRepository2 = orderService.getMemberRepository();
+        System.out.println("memberService -> memberRepository1 = " + memberRepository1);
+        System.out.println("orderService -> memberRepository2 = " + memberRepository2);
+        System.out.println("memberRepository = " + memberRepository);
+
+        Assertions.assertThat(memberService.getMemberRepository()).isEqualTo(memberRepository);
+        Assertions.assertThat(orderService.getMemberRepository()).isEqualTo(memberRepository);
+    }
+}
