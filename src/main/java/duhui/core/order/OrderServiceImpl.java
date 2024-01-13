@@ -1,5 +1,6 @@
 package duhui.core.order;
 
+import duhui.core.annotation.MainDiscountPolicy;
 import duhui.core.discount.DiscountPolicy;
 import duhui.core.member.Member;
 import duhui.core.member.MemberRepository;
@@ -13,7 +14,7 @@ public class OrderServiceImpl implements OrderService{
     private final DiscountPolicy discountPolicy;
 
     @Autowired
-    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+    public OrderServiceImpl(MemberRepository memberRepository, @MainDiscountPolicy DiscountPolicy discountPolicy) {
         this.memberRepository = memberRepository;
         this.discountPolicy = discountPolicy;
     }
