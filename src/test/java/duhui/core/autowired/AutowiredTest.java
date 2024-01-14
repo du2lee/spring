@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.lang.Nullable;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
@@ -16,7 +17,7 @@ public class AutowiredTest {
         ApplicationContext ac = new AnnotationConfigApplicationContext(TestBean.class);
     }
 
-    
+    @Component
     static class TestBean {
 
         @Autowired(required = false)
