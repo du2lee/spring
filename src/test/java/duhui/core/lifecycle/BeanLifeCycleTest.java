@@ -18,7 +18,7 @@ public class BeanLifeCycleTest {
     @Configuration
     static class LifeCyccleConfig {
 
-        @Bean
+        @Bean(initMethod = "init", destroyMethod = "close")
         public NetworkClient networkClient(){
             NetworkClient networkClient = new NetworkClient();
             networkClient.setUrl("https://duhui.io");
